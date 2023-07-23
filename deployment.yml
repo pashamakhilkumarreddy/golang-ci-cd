@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-ci-cd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: golang-app
+  template:
+    metadata:
+      labels:
+        app: golang-app
+    spec:
+      containers:
+        - name: golang-app
+          image: pashamakhilkumarreddy/golang-ci-cd
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.3"
+          ports:
+           - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
