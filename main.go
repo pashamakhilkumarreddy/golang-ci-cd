@@ -10,16 +10,31 @@ import (
 )
 
 func loadEnv(filePath string) func(string) string {
-	envFilePath := filePath
-	if len(envFilePath) == 0 {
-		envFilePath = ".env.example"
-		log.Fatalf(".env file path not provided using the default path %s", envFilePath)
+	envFile := filePath
+	envFilePath := "/go/bin/"
+	if len(envFile) == 0 {
+		envFile = "example.env"
+		log.Printf(".env file path not provided using the default file %s\n", envFile)
 	}
+	envFilePath = envFilePath + envFile
+	viper.SetDefault("PORT", "8080")
+	viper.AddConfigPath(".")
+	// viper.SetConfigName("example")
+	viper.SetConfigType("env")
 	viper.SetConfigFile(envFilePath)
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("Error reading config file %s", err)
+	viper.AutomaticEnv()
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Fatal("Config file not found")
+		} else {
+			if err != nil {
+				log.Fatalf("Error reading config file %s", err)
+			}
+		}
 	}
+
+	log.Printf("Using file %s\n", viper.ConfigFileUsed())
+
 	return func(key string) string {
 		value, ok := viper.Get(key).(string)
 		if !ok {
