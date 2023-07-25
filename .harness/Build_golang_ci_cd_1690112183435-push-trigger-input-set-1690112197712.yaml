@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_golang_ci_cd_1690112183435-push-trigger-input-set
+  identifier: Build_golang_ci_cd_1690112183435pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: golangcicd
+  pipeline:
+    identifier: Build_golang_ci_cd_1690112183435
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>

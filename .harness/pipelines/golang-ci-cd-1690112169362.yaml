@@ -1,0 +1,36 @@
+pipeline:
+  identifier: Build_golang_ci_cd_1690112183435
+  name: Build golang-ci-cd
+  orgIdentifier: default
+  projectIdentifier: golangcicd
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: account.Github
+        repoName: pashamakhilkumarreddy/golang-ci-cd
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  identifier: gobuild
+                  name: Build Golang App
+                  spec:
+                    shell: Sh
+                    command: |-
+                      go build
+                      go test
+                  timeout: ""
+                  type: Run
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
