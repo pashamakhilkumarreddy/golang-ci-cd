@@ -1,5 +1,7 @@
 # Golang CI CD Pipeline
 
+### This is a simple CI/CD tutorial using [Harness](https://www.harness.io/).
+
 ### To run the application in local
 
 - `go run main.go` or
